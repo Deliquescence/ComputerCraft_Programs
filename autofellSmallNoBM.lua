@@ -1,4 +1,4 @@
-os.loadAPI("JoshAPI")
+os.loadAPI("JoshAPI.lua")
 
 function fell()
 	local height = 1

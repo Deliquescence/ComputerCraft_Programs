@@ -3,7 +3,7 @@
 -- Helper functions and whatnots
 -- Mostly by Josh, if not is probably noted
 --
--- os.loadAPI("JoshAPI")
+-- os.loadAPI("JoshAPI.lua")
 
 version = 0.4 --Very arbitrary
 

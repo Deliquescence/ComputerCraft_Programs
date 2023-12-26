@@ -1,4 +1,4 @@
-os.loadAPI("JoshAPI")
+os.loadAPI("JoshAPI.lua")
 local tArgs = { ... }
 
 turtle.select(1)
