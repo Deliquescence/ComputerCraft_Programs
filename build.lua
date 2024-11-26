@@ -363,8 +363,8 @@ elseif choice == "lineup" then
         print("Height?")
         h=inputNum()
         print("Go down after? y/n")
-        d = inputStr()
-        if d == "y" or r == "yes" then
+        local r = inputStr()
+        if r == "y" or r == "yes" then
             d = true
         elseif r == "n" or r == "no" then
             d = false
