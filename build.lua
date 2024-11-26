@@ -1,20 +1,21 @@
+---@diagnostic disable-next-line: undefined-field
 os.loadAPI("JoshAPI.lua")
 
 local tArgs = { ... }
 
-function getArg(num)
-    a = JoshAPI.parse(tArgs[num])
+local function getArg(num)
+    local a = JoshAPI.parse(tArgs[num])
     if a == nil then
         print("Arugments error")
         print("Use build with no arguments if you don't know what you're doing")
         error()
-	end
-	return a
+    end
+    return a
 end
 
-function slot()
-    function trySlot()
-        for n=1,15 do
+local function slot()
+    local function trySlot()
+        for n = 1, 15 do
             if turtle.getItemCount(n) > 0 then
                 turtle.select(n)
                 return true
@@ -23,7 +24,7 @@ function slot()
         turtle.select(1)
         return false
     end
-    
+
     if not trySlot() then
         print("Add more blocks to continue.")
         while not trySlot() do
@@ -32,25 +33,25 @@ function slot()
     end
 end
 
-function placeUp()
-	slot()
-	turtle.placeUp()
+local function placeUp()
+    slot()
+    turtle.placeUp()
 end
 
-function placeDown()
-	slot()
-	turtle.placeDown()
+local function placeDown()
+    slot()
+    turtle.placeDown()
 end
 
-function place()
-	slot()
-	turtle.place()
+local function place()
+    slot()
+    turtle.place()
 end
 
-function inputNum()
-    a = io.read()
+local function inputNum()
+    local a = io.read()
     a = tonumber(a)
-    if a == nil or a <=0 then
+    if a == nil or a <= 0 then
         print("Number error")
         error()
     else
@@ -58,8 +59,8 @@ function inputNum()
     end
 end
 
-function inputStr()
-    a = io.read()
+local function inputStr()
+    local a = io.read()
     a = tostring(a)
     if a == nil then
         print("String error")
@@ -69,65 +70,65 @@ function inputStr()
     end
 end
 
-function line(L)
-    for i=1,L-1 do
+local function line(L)
+    for i = 1, L - 1 do
         placeDown()
         JoshAPI.forward()
     end
     placeDown()
 end
 
-function lineFromBelow(L)
-    for i=1,L-1 do
+local function lineFromBelow(L)
+    for i = 1, L - 1 do
         slot()
         placeUp()
         JoshAPI.forward()
     end
-	placeUp()
+    placeUp()
 end
 
-function lineUp(H,goDown)
-    for i=1,H do
+local function lineUp(H, goDown)
+    for i = 1, H do
         JoshAPI.up()
-		placeDown()
+        placeDown()
     end
-    
+
     if goDown then
         JoshAPI.forward()
-        for i=1,H do
+        for i = 1, H do
             JoshAPI.down()
         end
     end
 end
 
-function stairs(H)
-    for i=1,H-1 do
-		placeDown()
+local function stairs(H)
+    for i = 1, H - 1 do
+        placeDown()
         JoshAPI.up()
         JoshAPI.forward()
     end
-	placeDown()
+    placeDown()
 end
 
-function stairsDown(H)
-    for i=1,H-1 do
-		placeDown()
+local function stairsDown(H)
+    for i = 1, H - 1 do
+        placeDown()
         JoshAPI.forward()
         JoshAPI.down()
     end
-	placeDown()
+    placeDown()
 end
 
-function wallA(L,H)
-    for i=1,L-1 do
-        lineUp(H, true)        
+local function wallA(L, H)
+    for i = 1, L - 1 do
+        lineUp(H, true)
     end
     lineUp(H, false)
 end
 
-function wallB(L,H)
+local function wallB(L, H)
     JoshAPI.up()
-    for i=1,H-1 do
+    for i = 1, H - 1 do
         line(L)
         JoshAPI.up()
         turtle.turnRight()
@@ -136,40 +137,41 @@ function wallB(L,H)
     line(L)
 end
 
-function box(D,W,H,makeRoof)
-    function getDown()
+local function box(D, W, H, makeRoof)
+    local function getDown()
         turtle.turnRight()
         JoshAPI.forward()
-        for x=1,H do
+        for x = 1, H do
             JoshAPI.down()
         end
     end
-    wallA(D,H)
+
+    wallA(D, H)
     getDown()
-    
-    wallA(W-1,H)
+
+    wallA(W - 1, H)
     getDown()
-    
-    wallA(D-1,H)
+
+    wallA(D - 1, H)
     getDown()
-    
-    wallA(W-2,H)
+
+    wallA(W - 2, H)
     JoshAPI.forward()
     turtle.turnRight()
-    
+
     if makeRoof then
-        platform(D,W)
+        platform(D, W)
     end
 end
 
-function platform(L,W)
-    for i=1,W-1 do
+local function platform(L, W)
+    for i = 1, W - 1 do
         line(L)
-        if i%2 == 1 then
+        if i % 2 == 1 then
             turtle.turnRight()
             JoshAPI.forward()
             turtle.turnRight()
-        elseif i%2 == 0 then
+        elseif i % 2 == 0 then
             turtle.turnLeft()
             JoshAPI.forward()
             turtle.turnLeft()
@@ -178,14 +180,14 @@ function platform(L,W)
     line(L)
 end
 
-function platformFromBelow(L,W)
-    for i=1,W-1 do
+local function platformFromBelow(L, W)
+    for i = 1, W - 1 do
         lineFromBelow(L)
-        if i%2 == 1 then
+        if i % 2 == 1 then
             turtle.turnRight()
             JoshAPI.forward()
             turtle.turnRight()
-        elseif i%2 == 0 then
+        elseif i % 2 == 0 then
             turtle.turnLeft()
             JoshAPI.forward()
             turtle.turnLeft()
@@ -196,12 +198,14 @@ end
 
 JoshAPI.cleanTerm()
 
+local doText
 if #tArgs == 0 then
     doText = true
 else
     doText = false
 end
 
+local choice
 if doText then
     print("Shape maker")
     print("Fuel in slot 1")
@@ -210,16 +214,17 @@ if doText then
     print("What Shape?")
     print("Options:")
     print("line, wallA, wallB, box, platform, stairs, stairsDown, lineUp, lineFromBelow, platformFromBelow")
-    
+
     choice = inputStr()
-    
+
     term.clear()
-    term.setCursorPos(1,1)
+    term.setCursorPos(1, 1)
 else
     choice = getArg(1)
 end
 
 if choice == "line" then
+    local l
     if doText then
         print("Place turtle facing build direction.")
         print("------------------------------------")
@@ -229,9 +234,9 @@ if choice == "line" then
         l = getArg(2)
     end
     line(l)
-
 elseif choice == "linefrombelow" then
-	if doText then
+    local l
+    if doText then
         print("Place turtle facing build direction.")
         print("------------------------------------")
         print("Length?")
@@ -239,10 +244,9 @@ elseif choice == "linefrombelow" then
     else
         l = getArg(2)
     end
-    lineFromBelow(l) 
-
-
+    lineFromBelow(l)
 elseif choice == "stairs" then
+    local h
     if doText then
         print("Place turtle facing build direction.")
         print("Stair starts with block below turtle.")
@@ -252,9 +256,9 @@ elseif choice == "stairs" then
     else
         h = getArg(2)
     end
-    stairs(h)  
-    
+    stairs(h)
 elseif choice == "stairsdown" then
+    local h
     if doText then
         print("Place turtle facing build direction.")
         print("Stair starts with block below turtle.")
@@ -264,9 +268,9 @@ elseif choice == "stairsdown" then
     else
         h = getArg(2)
     end
-    stairsDown(h)  
-    
+    stairsDown(h)
 elseif choice == "walla" then
+    local l, h
     if doText then
         print("Method A - build vertical line by line")
         print("Place turtle facing build direction.")
@@ -279,9 +283,9 @@ elseif choice == "walla" then
         l = getArg(2)
         h = getArg(3)
     end
-    wallA(l,h)
-    
+    wallA(l, h)
 elseif choice == "wallb" then
+    local l, h
     if doText then
         print("Method B - start from bottom layer and go up")
         print("Place turtle facing build direction.")
@@ -294,16 +298,16 @@ elseif choice == "wallb" then
         l = getArg(2)
         h = getArg(3)
     end
-    wallB(l,h)
-    
+    wallB(l, h)
 elseif choice == "box" then
+    local d, w, h, r
     if doText then
         print("Place turtle in lower left corner.")
         print("----------------------------------")
         print("Depth? (Sides perpendicular to front of turtle)")
-        d=inputNum()
+        d = inputNum()
         print("Width? (Sides parallel to front of turtle)")
-        w=inputNum()
+        w = inputNum()
         print("Height?")
         h = inputNum()
         print("Roof? y/n")
@@ -322,46 +326,45 @@ elseif choice == "box" then
         h = getArg(4)
         r = getArg(5)
     end
-    
-    box(d,w,h,r)
 
+    box(d, w, h, r)
 elseif choice == "platform" then
+    local l, w
     if doText then
         print("Place turtle in bottom left corner.")
         print("-----------------------------------")
         print("Length? (Sides perpendicular to front of turtle)")
-        l=inputNum()
+        l = inputNum()
         print("Width? (Sides parallel to front of turtle)")
-        w=inputNum()
+        w = inputNum()
     else
         l = getArg(2)
         w = getArg(3)
     end
-    
-    platform(l,w)
-	
-	
+
+    platform(l, w)
 elseif choice == "platformfrombelow" then
+    local l, w
     if doText then
         print("Place turtle in bottom left corner.")
         print("-----------------------------------")
         print("Length? (Sides perpendicular to front of turtle)")
-        l=inputNum()
+        l = inputNum()
         print("Width? (Sides parallel to front of turtle)")
-        w=inputNum()
+        w = inputNum()
     else
         l = getArg(2)
         w = getArg(3)
     end
-    
-    platformFromBelow(l,w)
-    
+
+    platformFromBelow(l, w)
 elseif choice == "lineup" then
+    local h, d
     if doText then
-		print("Verical line")
+        print("Verical line")
         print("-----------------------------------")
         print("Height?")
-        h=inputNum()
+        h = inputNum()
         print("Go down after? y/n")
         local r = inputStr()
         if r == "y" or r == "yes" then
@@ -376,9 +379,8 @@ elseif choice == "lineup" then
         h = getArg(2)
         d = getArg(3)
     end
-    
-    lineUp(h,d)
-    
+
+    lineUp(h, d)
 else
     if doText then
         print("Not an option")
