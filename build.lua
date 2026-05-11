@@ -119,14 +119,14 @@ local function stairsDown(H)
     placeDown()
 end
 
-local function wallA(L, H)
+local function wallV(L, H)
     for i = 1, L - 1 do
         lineUp(H, true)
     end
     lineUp(H, false)
 end
 
-local function wallB(L, H)
+local function wallH(L, H)
     JoshAPI.up()
     for i = 1, H - 1 do
         line(L)
@@ -146,16 +146,16 @@ local function box(D, W, H, makeRoof)
         end
     end
 
-    wallA(D, H)
+    wallV(D, H)
     getDown()
 
-    wallA(W - 1, H)
+    wallV(W - 1, H)
     getDown()
 
-    wallA(D - 1, H)
+    wallV(D - 1, H)
     getDown()
 
-    wallA(W - 2, H)
+    wallV(W - 2, H)
     JoshAPI.forward()
     turtle.turnRight()
 
@@ -208,12 +208,10 @@ end
 local choice
 if doText then
     print("Shape maker")
-    print("Fuel in slot 1")
-    print("Materials in slots 2-16")
     print("-----------------------")
     print("What Shape?")
     print("Options:")
-    print("line, wallA, wallB, box, platform, stairs, stairsDown, lineUp, lineFromBelow, platformFromBelow")
+    print("line, wallV, wallH, box, platform, stairs, stairsDown, lineUp, lineFromBelow, platformFromBelow")
 
     choice = inputStr()
 
@@ -269,10 +267,10 @@ elseif choice == "stairsdown" then
         h = getArg(2)
     end
     stairsDown(h)
-elseif choice == "walla" then
+elseif choice == "wallV" then
     local l, h
     if doText then
-        print("Method A - build vertical line by line")
+        print("Wall Vertical - build up vertical line by line")
         print("Place turtle facing build direction.")
         print("------------------------------------")
         print("Length?")
@@ -283,11 +281,11 @@ elseif choice == "walla" then
         l = getArg(2)
         h = getArg(3)
     end
-    wallA(l, h)
-elseif choice == "wallb" then
+    wallV(l, h)
+elseif choice == "wallH" then
     local l, h
     if doText then
-        print("Method B - start from bottom layer and go up")
+        print("Wall Horizontal - start from bottom layer and go up")
         print("Place turtle facing build direction.")
         print("------------------------------------")
         print("Length?")
@@ -298,7 +296,7 @@ elseif choice == "wallb" then
         l = getArg(2)
         h = getArg(3)
     end
-    wallB(l, h)
+    wallH(l, h)
 elseif choice == "box" then
     local d, w, h, r
     if doText then
