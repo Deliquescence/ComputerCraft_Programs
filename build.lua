@@ -267,7 +267,7 @@ elseif choice == "stairsdown" then
         h = getArg(2)
     end
     stairsDown(h)
-elseif choice == "wallV" then
+elseif choice == "wallv" then
     local l, h
     if doText then
         print("Wall Vertical - build up vertical line by line")
@@ -282,7 +282,7 @@ elseif choice == "wallV" then
         h = getArg(3)
     end
     wallV(l, h)
-elseif choice == "wallH" then
+elseif choice == "wallh" then
     local l, h
     if doText then
         print("Wall Horizontal - start from bottom layer and go up")
