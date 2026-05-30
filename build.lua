@@ -196,6 +196,20 @@ local function platformFromBelow(L, W)
     lineFromBelow(L)
 end
 
+local function printNumBlocks(n)
+    local nStacks = math.floor(n / 64)
+    local remainder = n % 64
+    local message = "Will place " .. n .. " blocks"
+    if nStacks > 0 then
+        message = message .. " (" .. nStacks .. " stacks"
+        if remainder > 0 then
+            message = message .. " + " .. remainder
+        end
+        message = message .. ")"
+    end
+    print(message)
+end
+
 JoshAPI.cleanTerm()
 
 local doText
@@ -231,6 +245,7 @@ if choice == "line" then
     else
         l = getArg(2)
     end
+    printNumBlocks(l)
     line(l)
 elseif choice == "linefrombelow" then
     local l
@@ -242,6 +257,7 @@ elseif choice == "linefrombelow" then
     else
         l = getArg(2)
     end
+    printNumBlocks(l)
     lineFromBelow(l)
 elseif choice == "stairs" then
     local h
@@ -281,6 +297,7 @@ elseif choice == "wallv" then
         l = getArg(2)
         h = getArg(3)
     end
+    printNumBlocks(l * h)
     wallV(l, h)
 elseif choice == "wallh" then
     local l, h
@@ -296,6 +313,7 @@ elseif choice == "wallh" then
         l = getArg(2)
         h = getArg(3)
     end
+    printNumBlocks(l * h)
     wallH(l, h)
 elseif choice == "box" then
     local d, w, h, r
@@ -340,6 +358,7 @@ elseif choice == "platform" then
         w = getArg(3)
     end
 
+    printNumBlocks(l * w)
     platform(l, w)
 elseif choice == "platformfrombelow" then
     local l, w
@@ -355,6 +374,7 @@ elseif choice == "platformfrombelow" then
         w = getArg(3)
     end
 
+    printNumBlocks(l * w)
     platformFromBelow(l, w)
 elseif choice == "lineup" then
     local h, d
@@ -378,6 +398,7 @@ elseif choice == "lineup" then
         d = getArg(3)
     end
 
+    printNumBlocks(h)
     lineUp(h, d)
 else
     if doText then
