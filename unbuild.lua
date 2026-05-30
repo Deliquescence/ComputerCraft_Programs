@@ -10,12 +10,12 @@ local function getArg(num)
         print("Use unbuild with no arguments if you don't know what you're doing")
         error()
     end
-	return a
+    return a
 end
 
 local function slot()
     local function slotsHaveSpace()
-        for n=1,16 do
+        for n = 1, 16 do
             if turtle.getItemSpace(n) > 0 then
                 return true
             end
@@ -23,7 +23,7 @@ local function slot()
         turtle.select(1)
         return false
     end
-    
+
     if not slotsHaveSpace() then
         print("Empty inventory to continue.")
         while not slotsHaveSpace() do
@@ -35,7 +35,7 @@ end
 local function inputNum()
     local a = io.read()
     a = tonumber(a)
-    if a == nil or a <=0 then
+    if a == nil or a <= 0 then
         print("Number error")
         error()
     else
@@ -55,32 +55,32 @@ local function inputStr()
 end
 
 local function line(L)
-    for i=1,L-1 do
+    for i = 1, L - 1 do
         slot()
         JoshAPI.forwardA()
     end
 end
 
-local function lineUp(H,goDown)
-    for i=1,H-1 do
-		slot()
+local function lineUp(H, goDown)
+    for i = 1, H - 1 do
+        slot()
         JoshAPI.upA()
     end
-    
+
     if goDown then
         lineDown(H)
     end
 end
 
 local function lineDown(H)
-    for i=1,H-1 do
-		slot()
-		JoshAPI.downA()
+    for i = 1, H - 1 do
+        slot()
+        JoshAPI.downA()
     end
 end
 
 local function stairsUp(H)
-    for i=1,H-1 do
+    for i = 1, H - 1 do
         slot()
         turtle.digDown()
         JoshAPI.upA()
@@ -91,7 +91,7 @@ local function stairsUp(H)
 end
 
 local function stairsDown(H)
-    for i=1,H-1 do
+    for i = 1, H - 1 do
         slot()
         turtle.digDown()
         JoshAPI.forwardA()
@@ -101,27 +101,27 @@ local function stairsDown(H)
     turtle.digDown()
 end
 
-local function wallA(L,H)
-    for i=1, math.floor((L)/2) do --math.floor((L-1)/2)
+local function wallA(L, H)
+    for i = 1, math.floor((L) / 2) do --math.floor((L-1)/2)
         lineUp(H, false)
-		JoshAPI.forwardA()
-		lineDown(H)
-		if i == math.floor((L)/2) then --on last one
-			if L%2 == 1 then
-				JoshAPI.forwardA()
-			end
-		else
-			JoshAPI.forwardA()
-		end
+        JoshAPI.forwardA()
+        lineDown(H)
+        if i == math.floor((L) / 2) then --on last one
+            if L % 2 == 1 then
+                JoshAPI.forwardA()
+            end
+        else
+            JoshAPI.forwardA()
+        end
     end
-	if L%2 == 1 then
-		lineUp(H, true)
-	end
+    if L % 2 == 1 then
+        lineUp(H, true)
+    end
 end
 
-local function wallB(L,H)
+local function wallB(L, H)
     JoshAPI.upA()
-    for i=1,H-1 do
+    for i = 1, H - 1 do
         line(L)
         JoshAPI.upA()
         turtle.turnRight()
@@ -130,20 +130,20 @@ local function wallB(L,H)
     line(L)
 end
 
-local function box(D,W,H,makeRoof)
+local function box(D, W, H, makeRoof)
     local function getDown()
-        for x=1,H-1 do
+        for x = 1, H - 1 do
             JoshAPI.downA()
         end
     end
-	
-	for i=1,W do
+
+    for i = 1, W do
         wallA(D, H)
-        if i%2 == 1 then
+        if i % 2 == 1 then
             turtle.turnRight()
             JoshAPI.forwardA()
             turtle.turnRight()
-        elseif i%2 == 0 then
+        elseif i % 2 == 0 then
             turtle.turnLeft()
             JoshAPI.forwardA()
             turtle.turnLeft()
@@ -151,14 +151,14 @@ local function box(D,W,H,makeRoof)
     end
 end
 
-local function platform(D,W)
-    for i=1,W-1 do
+local function platform(D, W)
+    for i = 1, W - 1 do
         line(D)
-        if i%2 == 1 then
+        if i % 2 == 1 then
             turtle.turnRight()
             JoshAPI.forwardA()
             turtle.turnRight()
-        elseif i%2 == 0 then
+        elseif i % 2 == 0 then
             turtle.turnLeft()
             JoshAPI.forwardA()
             turtle.turnLeft()
@@ -186,11 +186,11 @@ if doText then
     print("What Shape?")
     print("Options:")
     print("line, wallA, wallB, box, platform, stairs, stairsDown, lineUp")
-    
+
     choice = inputStr()
-    
+
     term.clear()
-    term.setCursorPos(1,1)
+    term.setCursorPos(1, 1)
 else
     choice = getArg(1)
 end
@@ -206,7 +206,6 @@ if choice == "line" then
         l = getArg(2)
     end
     line(l)
-
 elseif choice == "stairs" then
     local h
     if doText then
@@ -219,7 +218,6 @@ elseif choice == "stairs" then
         h = getArg(2)
     end
     stairsUp(h)
-    
 elseif choice == "stairsdown" then
     local h
     if doText then
@@ -231,8 +229,7 @@ elseif choice == "stairsdown" then
     else
         h = getArg(2)
     end
-    stairsDown(h)  
-    
+    stairsDown(h)
 elseif choice == "walla" then
     local l, h
     if doText then
@@ -247,8 +244,7 @@ elseif choice == "walla" then
         l = getArg(2)
         h = getArg(3)
     end
-    wallA(l,h)
-    
+    wallA(l, h)
 elseif choice == "wallb" then
     local l, h
     if doText then
@@ -263,8 +259,7 @@ elseif choice == "wallb" then
         l = getArg(2)
         h = getArg(3)
     end
-    wallB(l,h)
-    
+    wallB(l, h)
 elseif choice == "box" then
     local d, w, h
     if doText then
@@ -272,19 +267,17 @@ elseif choice == "box" then
         print("----------------------------------")
         print("Depth? (Sides perpendicular to front of turtle)")
         d = inputNum()
-		print("Width? (Sides parallel to front of turtle)")
+        print("Width? (Sides parallel to front of turtle)")
         w = inputNum()
         print("Height?")
         h = inputNum()
-        
     else
         d = getArg(2)
         w = getArg(3)
         h = getArg(4)
     end
-    
-    box(d,w,h)
 
+    box(d, w, h)
 elseif choice == "platform" then
     local d, w
     if doText then
@@ -298,9 +291,8 @@ elseif choice == "platform" then
         d = getArg(2)
         w = getArg(3)
     end
-    
-    platform(d,w)
-    
+
+    platform(d, w)
 elseif choice == "lineup" then
     local h, d
     if doText then
@@ -320,9 +312,8 @@ elseif choice == "lineup" then
         h = getArg(2)
         d = getArg(3)
     end
-    
-    lineUp(h,d)
-    
+
+    lineUp(h, d)
 elseif choice == "linedown" then
     local h
     if doText then
@@ -331,9 +322,8 @@ elseif choice == "linedown" then
     else
         h = getArg(2)
     end
-    
+
     lineDown(h)
-    
 else
     if doText then
         print("Not an option")
