@@ -1,9 +1,10 @@
+---@diagnostic disable-next-line: undefined-field
 os.loadAPI("JoshAPI.lua")
 
 local tArgs = { ... }
 
-function getArg(num)
-    a = JoshAPI.parse(tArgs[num])
+local function getArg(num)
+    local a = JoshAPI.parse(tArgs[num])
     if a == nil then
         print("Arugments error")
         print("Use unbuild with no arguments if you don't know what you're doing")
@@ -12,8 +13,8 @@ function getArg(num)
 	return a
 end
 
-function slot()
-    function slotsHaveSpace()
+local function slot()
+    local function slotsHaveSpace()
         for n=1,16 do
             if turtle.getItemSpace(n) > 0 then
                 return true
@@ -31,8 +32,8 @@ function slot()
     end
 end
 
-function inputNum()
-    a = io.read()
+local function inputNum()
+    local a = io.read()
     a = tonumber(a)
     if a == nil or a <=0 then
         print("Number error")
@@ -42,8 +43,8 @@ function inputNum()
     end
 end
 
-function inputStr()
-    a = io.read()
+local function inputStr()
+    local a = io.read()
     a = tostring(a)
     if a == nil then
         print("String error")
@@ -53,14 +54,14 @@ function inputStr()
     end
 end
 
-function line(L)
+local function line(L)
     for i=1,L-1 do
         slot()
         JoshAPI.forwardA()
     end
 end
 
-function lineUp(H,goDown)
+local function lineUp(H,goDown)
     for i=1,H-1 do
 		slot()
         JoshAPI.upA()
@@ -71,14 +72,14 @@ function lineUp(H,goDown)
     end
 end
 
-function lineDown(H)
+local function lineDown(H)
     for i=1,H-1 do
 		slot()
 		JoshAPI.downA()
     end
 end
 
-function stairsUp(H)
+local function stairsUp(H)
     for i=1,H-1 do
         slot()
         turtle.digDown()
@@ -89,7 +90,7 @@ function stairsUp(H)
     turtle.digDown()
 end
 
-function stairsDown(H)
+local function stairsDown(H)
     for i=1,H-1 do
         slot()
         turtle.digDown()
@@ -100,7 +101,7 @@ function stairsDown(H)
     turtle.digDown()
 end
 
-function wallA(L,H)
+local function wallA(L,H)
     for i=1, math.floor((L)/2) do --math.floor((L-1)/2)
         lineUp(H, false)
 		JoshAPI.forwardA()
@@ -118,7 +119,7 @@ function wallA(L,H)
 	end
 end
 
-function wallB(L,H)
+local function wallB(L,H)
     JoshAPI.upA()
     for i=1,H-1 do
         line(L)
@@ -129,8 +130,8 @@ function wallB(L,H)
     line(L)
 end
 
-function box(D,W,H,makeRoof)
-    function getDown()
+local function box(D,W,H,makeRoof)
+    local function getDown()
         for x=1,H-1 do
             JoshAPI.downA()
         end
@@ -150,7 +151,7 @@ function box(D,W,H,makeRoof)
     end
 end
 
-function platform(D,W)
+local function platform(D,W)
     for i=1,W-1 do
         line(D)
         if i%2 == 1 then
@@ -168,12 +169,14 @@ end
 
 JoshAPI.cleanTerm()
 
+local doText
 if #tArgs == 0 then
     doText = true
 else
     doText = false
 end
 
+local choice
 if doText then
     print("Shape unmaker")
     print("Warning: This program is mostly untested")
@@ -193,6 +196,7 @@ else
 end
 
 if choice == "line" then
+    local l
     if doText then
         print("Place turtle facing build direction.")
         print("------------------------------------")
@@ -204,6 +208,7 @@ if choice == "line" then
     line(l)
 
 elseif choice == "stairs" then
+    local h
     if doText then
         print("Place turtle facing build direction.")
         print("Stair starts with block below turtle.")
@@ -213,9 +218,10 @@ elseif choice == "stairs" then
     else
         h = getArg(2)
     end
-    stairs(h)  
+    stairsUp(h)
     
 elseif choice == "stairsdown" then
+    local h
     if doText then
         print("Place turtle facing build direction.")
         print("Stair starts with block below turtle.")
@@ -228,6 +234,7 @@ elseif choice == "stairsdown" then
     stairsDown(h)  
     
 elseif choice == "walla" then
+    local l, h
     if doText then
         print("Method A - build line by line")
         print("Place turtle facing build direction.")
@@ -243,6 +250,7 @@ elseif choice == "walla" then
     wallA(l,h)
     
 elseif choice == "wallb" then
+    local l, h
     if doText then
         print("Method B - start from bottom layer and go up")
         print("Place turtle facing build direction.")
@@ -258,6 +266,7 @@ elseif choice == "wallb" then
     wallB(l,h)
     
 elseif choice == "box" then
+    local d, w, h
     if doText then
         print("Place turtle in lower left corner.")
         print("----------------------------------")
@@ -277,6 +286,7 @@ elseif choice == "box" then
     box(d,w,h)
 
 elseif choice == "platform" then
+    local d, w
     if doText then
         print("Place turtle in bottom left corner.")
         print("-----------------------------------")
@@ -292,6 +302,7 @@ elseif choice == "platform" then
     platform(d,w)
     
 elseif choice == "lineup" then
+    local h, d
     if doText then
         print("Height?")
         h = inputNum()
@@ -313,6 +324,7 @@ elseif choice == "lineup" then
     lineUp(h,d)
     
 elseif choice == "linedown" then
+    local h
     if doText then
         print("Height (Depth)?")
         h = inputNum()
