@@ -61,6 +61,13 @@ local function line(L)
     end
 end
 
+local function lineDown(H)
+    for i = 1, H - 1 do
+        slot()
+        JoshAPI.downA()
+    end
+end
+
 local function lineUp(H, goDown)
     for i = 1, H - 1 do
         slot()
@@ -69,13 +76,6 @@ local function lineUp(H, goDown)
 
     if goDown then
         lineDown(H)
-    end
-end
-
-local function lineDown(H)
-    for i = 1, H - 1 do
-        slot()
-        JoshAPI.downA()
     end
 end
 
