@@ -256,6 +256,24 @@ elseif choice == "wallh" then
         h = getArg(3)
     end
     wallH(l, h)
+elseif choice == "wall" then
+    local l, h
+    if doText then
+        print("Place turtle facing build direction.")
+        print("------------------------------------")
+        print("Length?")
+        l = inputNum()
+        print("Height?")
+        h = inputNum()
+    else
+        l = getArg(2)
+        h = getArg(3)
+    end
+    if h > l then
+        wallV(l, h)
+    else
+        wallH(l, h)
+    end
 elseif choice == "box" then
     local d, w, h
     if doText then
